@@ -18,4 +18,6 @@ class GradeController {
     public String checkGrade(@RequestParam int mark) {
         return gradeService.checkGrade(mark);
     }
+
+    //Test Comment
 }
