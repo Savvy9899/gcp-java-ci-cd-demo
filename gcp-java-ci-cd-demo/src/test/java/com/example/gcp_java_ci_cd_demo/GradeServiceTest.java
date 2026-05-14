@@ -18,7 +18,7 @@ class GradeServiceTest {
     void shouldReturnFailForMarkBelowFifty() {
         assertEquals("FAIL", gradeService.checkGrade(49));
         assertEquals("FAIL", gradeService.checkGrade(0));
-        assertEquals("PASS", gradeService.checkGrade(49));
+        //assertEquals("PASS", gradeService.checkGrade(49));
     }
 
     @Test
