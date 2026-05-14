@@ -11,14 +11,14 @@ steps:
     args:
       - 'build'
       - '-t'
-      - 'australia-southeast1-docker.pkg.dev/gcp-cicd-assignment/cicd-demo-repo/gcp-java-ci-cd-demo:$SHORT_SHA'
+      - 'australia-southeast2-docker.pkg.dev/gcp-cicd-assignment/cicd-demo-repo/gcp-java-ci-cd-demo:$SHORT_SHA'
       - '.'
 
   - name: 'gcr.io/cloud-builders/docker'
     id: 'Push Docker image'
     args:
       - 'push'
-      - 'australia-southeast1-docker.pkg.dev/gcp-cicd-assignment/cicd-demo-repo/gcp-java-ci-cd-demo:$SHORT_SHA'
+      - 'australia-southeast2-docker.pkg.dev/gcp-cicd-assignment/cicd-demo-repo/gcp-java-ci-cd-demo:$SHORT_SHA'
 
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     id: 'Deploy to Cloud Run'
@@ -28,15 +28,15 @@ steps:
       - 'deploy'
       - 'gcp-java-ci-cd-demo'
       - '--image'
-      - 'australia-southeast1-docker.pkg.dev/gcp-cicd-assignment/cicd-demo-repo/gcp-java-ci-cd-demo:$SHORT_SHA'
+      - 'australia-southeast2-docker.pkg.dev/gcp-cicd-assignment/cicd-demo-repo/gcp-java-ci-cd-demo:$SHORT_SHA'
       - '--region'
-      - 'australia-southeast1'
+      - 'australia-southeast2'
       - '--platform'
       - 'managed'
       - '--allow-unauthenticated'
 
 images:
-  - 'australia-southeast1-docker.pkg.dev/gcp-cicd-assignment/cicd-demo-repo/gcp-java-ci-cd-demo:$SHORT_SHA'
+  - 'australia-southeast2-docker.pkg.dev/gcp-cicd-assignment/cicd-demo-repo/gcp-java-ci-cd-demo:$SHORT_SHA'
 
 options:
   logging: CLOUD_LOGGING_ONLY
