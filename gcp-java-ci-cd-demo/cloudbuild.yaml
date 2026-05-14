@@ -1,0 +1,37 @@
+steps:
+  - name: 'maven:3.9-eclipse-temurin-17'
+    id: 'Run Java unit tests'
+    entrypoint: 'mvn'
+    args: ['test']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'Build Java container image'
+    args:
+      - 'build'
+      - '-t'
+      - 'australia-southeast2-docker.pkg.dev/YOUR_PROJECT_ID/YOUR_REPOSITORY_NAME/gcp-java-ci-cd-demo:$SHORT_SHA'
+      - '.'
+
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'Push Java container image'
+    args:
+      - 'push'
+      - 'australia-southeast2-docker.pkg.dev/YOUR_PROJECT_ID/YOUR_REPOSITORY_NAME/gcp-java-ci-cd-demo:$SHORT_SHA'
+
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    id: 'Deploy Java application to Cloud Run'
+    entrypoint: 'gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'gcp-java-ci-cd-demo'
+      - '--image'
+      - 'australia-southeast2-docker.pkg.dev/YOUR_PROJECT_ID/YOUR_REPOSITORY_NAME/gcp-java-ci-cd-demo:$SHORT_SHA'
+      - '--region'
+      - 'australia-southeast2'
+      - '--platform'
+      - 'managed'
+      - '--allow-unauthenticated'
+
+images:
+  - 'australia-southeast2-docker.pkg.dev/YOUR_PROJECT_ID/YOUR_REPOSITORY_NAME/gcp-java-ci-cd-demo:$SHORT_SHA'
